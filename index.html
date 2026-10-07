@@ -1,27 +1,53 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
-<meta charset="utf-8">
-<!-- Mobile : pas de zoom (pincement/double-tap), encoche couverte (viewport-fit), appli plein écran une fois ajoutée à l'écran d'accueil. -->
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="CARILLON">
-<meta name="theme-color" content="#16130f">
-<title>CARILLON</title>
-<link rel="manifest" href="manifest.webmanifest">
-<link rel="icon" href="assets/icon-192.png">
-<link rel="apple-touch-icon" href="assets/icon-192.png">
-<link rel="stylesheet" href="src/style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f5f4eb">
+  <meta name="description" content="Un jardin de couleurs à faire fleurir. Empilez, fusionnez et déclenchez des cascades dans ce puzzle gratuit, sans publicité ni vies limitées.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <title>Hexa Bloom — faites fleurir les couleurs</title>
+  <link rel="icon" type="image/svg+xml" href="assets/icon.svg">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="preload" href="assets/fonts/Nunito.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="src/style.css">
 </head>
 <body>
-<!-- Le jeu entier se dessine dans ce canvas (résolution logique 480×270, échelle entière). -->
-<main id="stage">
-  <canvas id="game" width="480" height="270"></canvas>
-  <!-- Zone DOM discrète pour la saisie (seed, export/import de sauvegarde) : positionnée par src/ui. -->
-  <div id="dom" hidden></div>
-</main>
-<script type="module" src="src/main.js"></script>
+  <header class="site-header">
+    <a class="brand" href="./" aria-label="Hexa Bloom, accueil"><img src="assets/icon.svg" width="43" height="43" alt=""><span>hexa<span class="brand-light">bloom</span><small>UNE PAUSE QUI PREND COULEUR</small></span></a>
+    <div class="header-right"><span class="free-label"><span></span>100 % jeu. 0 % pression.</span><button class="icon-button" id="sound-btn" aria-label="Activer le son" title="Son"><i data-icon="volume-x"></i></button><button class="icon-button" id="settings-btn" aria-label="Réglages" title="Réglages"><i data-icon="settings-2"></i></button></div>
+  </header>
+  <main class="layout">
+    <aside class="sidebar">
+      <div class="eyebrow"><span class="tiny-flower">✳</span> LE BONHEUR, PAR PETITES PILES</div>
+      <h1>Un peu de calme.<br>Un joli <em>combo.</em></h1>
+      <p class="intro">Rapprochez les couleurs.<br>Et laissez la magie fleurir.</p>
+      <div class="garden-card">
+        <div class="garden-illustration" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><span class="float-star star-one">✧</span><span class="float-star star-two">✧</span><svg viewBox="0 0 280 170"><ellipse cx="141" cy="139" rx="102" ry="19" fill="#d9e2d0"/><path d="M43 116 138 64 237 114 237 130 140 164 43 132Z" fill="#8ab99a"/><path d="M43 116 138 67 237 114 141 149Z" fill="#c0dbab"/><path d="M97 114V68M164 119V51M204 113V89" stroke="#5d8e6e" stroke-width="4" stroke-linecap="round"/><path d="M97 99Q71 100 79 84Q98 81 97 99M164 90Q136 90 141 73Q163 73 164 90M164 104Q188 103 183 88Q163 88 164 104" fill="#6ba985"/><g fill="#f3a1b0"><circle cx="98" cy="54" r="14"/><circle cx="84" cy="64" r="14"/><circle cx="90" cy="80" r="14"/><circle cx="107" cy="79" r="14"/><circle cx="112" cy="62" r="14"/></g><circle cx="98" cy="68" r="10" fill="#ffe6a2"/><g fill="#ae9dda"><circle cx="164" cy="34" r="15"/><circle cx="148" cy="46" r="15"/><circle cx="154" cy="64" r="15"/><circle cx="176" cy="63" r="15"/><circle cx="180" cy="43" r="15"/></g><circle cx="164" cy="49" r="11" fill="#fff2c3"/><g fill="#edcb70"><circle cx="204" cy="80" r="9"/><circle cx="194" cy="88" r="9"/><circle cx="200" cy="99" r="9"/><circle cx="213" cy="97" r="9"/><circle cx="214" cy="85" r="9"/></g><circle cx="204" cy="89" r="6" fill="#fff5d9"/><path d="m65 127 12-6 12 6-12 6Z" fill="#e6d98e"/><path d="m120 135 12-6 12 6-12 6Z" fill="#8cb2a0"/></svg></div>
+        <div class="garden-card-bottom"><div><span class="small-label">VOTRE PETIT MONDE</span><strong id="world-name">Le jardin éveillé</strong></div><span class="world-number" id="world-number">01 / 05</span></div>
+        <button class="text-button" id="journey-btn">Explorer les 30 jardins <i data-icon="arrow-up-right"></i></button>
+      </div>
+      <div class="daily-card"><span class="daily-icon"><i data-icon="sun"></i></span><div><strong>Une graine par jour</strong><p>Un défi identique pour tout le monde.</p></div><button class="icon-button" id="daily-btn" aria-label="Jouer au défi du jour"><i data-icon="arrow-right"></i></button></div>
+      <button id="zen-btn" class="zen-link"><i data-icon="infinity"></i> Une envie de jouer sans objectif ? <span>Mode zen</span></button>
+      <div class="sidebar-footer"><span><i data-icon="heart"></i> Sans vies limitées</span><span><i data-icon="wifi-off"></i> Aussi hors ligne</span></div>
+    </aside>
+    <section class="game-shell" aria-label="Jeu Hexa Bloom">
+      <div class="game-topline"><button id="level-btn" class="level-pill"><span class="level-dot"></span><span id="level-label">Jardin 01</span><i data-icon="chevron-down"></i></button><div class="best-label"><i data-icon="trophy"></i><span id="best-score">0</span><span class="best-word">record</span></div><button class="icon-button mobile-help" id="help-btn" aria-label="Comment jouer"><i data-icon="circle-help"></i></button></div>
+      <div class="objective-row"><div><span class="small-label" id="goal-caption">FAITES ÉCLORE LE SCORE</span><div class="score-line"><strong id="score">0</strong><span id="goal-value">/ 240</span></div></div><div class="combo-meter" id="combo-meter"><span id="combo-icon">✧</span><div><b id="combo-value">À vous de fleurir</b><small id="combo-sub">Une couleur après l’autre</small></div></div></div>
+      <div class="progress-track"><div id="progress-fill"></div><span class="progress-flower">✿</span></div>
+      <div id="extra-goals" class="extra-goals"></div>
+      <div class="board-wrap" id="board-wrap"><canvas id="board" aria-label="Plateau hexagonal : sélectionnez une pile, puis une case vide." role="img"></canvas><div id="board-accessible" class="sr-only" role="group" aria-label="Cases du plateau"></div><div id="floating-text" class="floating-text" aria-hidden="true"></div><div class="board-caption" id="board-caption"><span>✦</span> Les couleurs voisines s’attirent.</div></div>
+      <div class="hand-heading"><span id="hand-instruction">CHOISISSEZ UNE PILE</span><span class="hand-note">puis une case vide</span></div>
+      <div class="hand" id="hand" aria-label="Piles disponibles"></div>
+      <div class="tools"><button class="tool" id="undo-btn"><span class="tool-icon"><i data-icon="undo-2"></i></span><span>Annuler</span><small>gratuit</small></button><button class="tool" id="shuffle-btn"><span class="tool-icon"><i data-icon="shuffle"></i><b id="shuffle-count">3</b></span><span>Brasser</span><small>nouvelles piles</small></button><button class="tool" id="spade-btn"><span class="tool-icon"><i data-icon="wand-sparkles"></i><b id="spade-count">2</b></span><span>Éclaircir</span><small>libérer une case</small></button></div>
+      <div class="game-footer"><span id="move-label">0 coup joué</span><button id="hint-btn"><i data-icon="lightbulb"></i> Un petit indice</button></div>
+    </section>
+  </main>
+  <footer class="page-footer"><span>Fait pour le plaisir de jouer.</span><button id="rules-link">Comment jouer</button><span class="footer-dot">·</span><button id="credits-btn">Crédits & assets libres</button></footer>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <dialog id="modal"><button class="modal-close icon-button" id="modal-close" aria-label="Fermer"><i data-icon="x"></i></button><div id="modal-content"></div></dialog>
+  <script type="module" src="src/main.js"></script>
 </body>
 </html>

@@ -1,63 +1,48 @@
-# CARILLON
+# Hexa Bloom
 
-Survivor-like cadencé par la musique. Vue du dessus, une main sur ZQSD, des vagues qui enflent
-et une bande-son qui monte quand tu joues dans le rythme. Folk-horror rural : boue, bronze, brume.
+Un puzzle HTML mobile de piles hexagonales. Touchez une pile puis une case vide, ou glissez-la sur le plateau. Les couleurs supérieures identiques des cases voisines se regroupent. Dès 10 pièces identiques, la pile éclot et révèle les couleurs suivantes : les cascades rapportent jusqu’à ×5 points.
 
-Tu es le dernier apprenti du Beffroi Mère. Ton maître est parti reconsacrer la paroisse de
-Cendrelune il y a trois mois. Il n'est pas revenu. Tu commences par là.
+## Jouer
 
-## Lancer le jeu
-
-Le jeu charge des JSON et des modules ES : il faut un serveur HTTP local (pas de `file://`).
-
-```
-./serve.sh        # Linux / macOS
-serve.bat         # Windows
-```
-Puis ouvrir http://localhost:8080/ et cliquer pour « sonner » (déblocage audio du navigateur).
-Aucune dépendance, aucun build : JavaScript vanilla, Canvas 2D, Web Audio API.
-
-## Contrôles (par défaut, tout est remappable dans les options)
-
-| Action | Clavier | Manette |
-|---|---|---|
-| Se déplacer | ZQSD / WASD / flèches | Stick gauche |
-| Volée (dash, sur le temps) | Espace | A / Croix |
-| Contre-battement (parade, sur le temps) | Shift ou clic droit | B / Rond |
-| Pause | Échap | Start |
-
-Toutes les armes tirent sur les temps. Volée et Contre-battement exécutés dans la fenêtre du
-temps (± 110 ms) chargent la Résonance : 4 crans (×1, ×1.4, ×1.8, ×2.5) qui multiplient les
-dégâts et font entrer une couche de musique à chaque cran. Options d'accessibilité : « Mesure
-assistée » (fenêtre ×3) et « Sans rythme » (Résonance fixe).
-
-## Structure
-
-```
-index.html  src/main.js          bootstrap, machine à états, boucle à pas fixe 60 Hz
-src/core/     boucle, entrées (clavier, souris, manette), rng seedé, pools, grille spatiale, sauvegarde
-src/render/   renderer, atlas, caméra, lumière (multiply/screen), particules, VFX, polices
-src/audio/    moteur, Conductor (la Mesure), sampler, musique en couches, bruitages
-src/game/     joueur, Résonance, Timbres, Accords, fusions, ennemis, boss, spawner, progression
-src/ui/       titre, hub, tutoriel, HUD, cartes, pause, bilan, codex, options, crédits, i18n
-src/data/     équilibrage, vagues, paroisses, sonneurs, lore, textes FR/EN, partitions
-assets/       sprites, tuiles, UI, polices, audio (échantillons, bruitages) + manifestes
-tests/        simulation déterministe, DPS, contrôles statiques, perf (voir tests/README.md)
+```sh
+./serve.sh
+# ou : npm start
+# Windows : serve.bat
 ```
 
-Documents : `PROMPT.md` (brief), `ARCHITECTURE.md` (contrats des modules), `SOURCING.md`
-(provenance des assets), `CREDITS.md` (auteur, licence et URL de chaque fichier),
-`tests/PLAYTEST.md` (rapport d'équilibrage).
+Ouvrez le port 8080 du serveur dans votre navigateur. Sur téléphone, utilisez l’adresse réseau de votre ordinateur sur le même Wi-Fi. Pour une installation sur l’écran d’accueil et le mode hors ligne, servez le dossier via HTTPS (localhost fonctionne aussi). Aucun serveur applicatif, compte, clé API ou build n’est nécessaire.
 
-## Tests
+Les fichiers peuvent être publiés tels quels sur tout hébergement statique HTTPS, y compris dans un sous-dossier. Le jeu et les assets sont préchargés par le service worker au premier passage. Attendez quelques secondes après le chargement initial avant de passer hors ligne. Le premier chargement nécessite le réseau ; les suivants fonctionnent sans.
 
-```
-node tests/checks.mjs          # contrôles statiques (JSON, i18n, manifestes, règles du projet)
-node tests/sim.mjs --matrix    # runs simulées (voir tests/README.md pour les profils)
-node tests/perf.mjs            # run réelle en navigateur headless, mesure à la minute 10
+## Version HTML portable
+
+```sh
+node tools/standalone.mjs /tmp/Hexa-Bloom.html
 ```
 
-## Licences
+Cette édition regroupe le jeu, les sons, le piano, la police et les licences dans un seul fichier HTML d’environ 605 Ko. Ouvrez ce fichier dans un navigateur qui exécute les fichiers HTML locaux : aucun serveur ni connexion ne sont requis. Sur mobile, l’hébergement HTTPS reste recommandé pour l’installation sur l’écran d’accueil et pour éviter les restrictions des lecteurs de fichiers intégrés.
 
-Le code du jeu est publié sous licence MIT. Les assets ont chacun leur licence (CC0, CC-BY,
-CC-BY-SA, OGA-BY, OFL, CC Sampling Plus), listée dans `CREDITS.md` et dans l'écran de crédits.
+## Contenu
+
+- 30 jardins en cinq mondes, avec trois à six couleurs.
+- Piles multicolores dès le jardin 3, fleurs au 4, rochers au 7, soleil et jokers au 10, récoltes au 13, pierres doubles au 19 et grand plateau au 25.
+- Étoiles de maîtrise, cascades et record personnel.
+- Mode zen sans objectif, défi quotidien déterministe renouvelé à minuit UTC.
+- Annulation des 12 dernières actions, brassages et éclaircies gratuits. +1 brassage tous les quatre placements, +1 éclaircie par 50 pièces écloses. Aucune vie, attente, publicité ou transaction.
+- Sauvegarde automatique par mode sur l’appareil. Supprimer les données du navigateur efface la progression.
+- Musique au piano, sons, vibrations compatibles, symboles pour distinguer les couleurs et animations réduites.
+- Souris, tactile et clavier : 1/2/3 choisit une pile, Tab et Entrée parcourent les cases, Z annule, Échap désélectionne.
+
+## Développement et tests
+
+Node 22+ et Python 3. Aucun paquet de production.
+
+```sh
+npm test
+# Contrôle navigateur avec Playwright installé à l’extérieur du dépôt :
+PLAYWRIGHT_MODULE=/workspace/hexa-bloom-tools/playwright-system.mjs node tests/browser.mjs
+```
+
+`src/engine.js` contient les règles sans DOM. `renderer.js` dessine un plateau Canvas 2D avec résolution plafonnée à 2×, sprites de pièces mis en cache, transferts pièce par pièce, rebonds et éclosions. Les trajectoires utilisent le temps écoulé et les animations ne tournent qu’en cas d’activité. `main.js` gère l’interface, la sauvegarde et les modes. `audio.js` joue des samples libres ; le piano est un arrangement original. Le jeu suspend l’audio quand l’onglet est masqué. Après une modification des fichiers livrés, lancez `node tools/update-cache.mjs` pour renouveler le cache hors ligne.
+
+Les assets sont distribués avec leurs crédits et licences dans [CREDITS.md](CREDITS.md). L’ancien projet a été remplacé avec autorisation ; son historique Git est conservé. Une archive locale complète de l’état antérieur est conservée hors dépôt à `/workspace/backups/carillon-original.tar.gz`.

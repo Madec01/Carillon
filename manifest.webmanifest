@@ -1,16 +1,15 @@
 {
-  "name": "CARILLON — Les Marches Sourdes",
-  "short_name": "CARILLON",
-  "description": "Survivor-like cadencé par la musique : fais sonner la cloche jusqu'à l'aube.",
+  "name": "Hexa Bloom — le jardin des couleurs",
+  "short_name": "Hexa Bloom",
+  "description": "Un puzzle hexagonal gratuit, doux et plein de cascades.",
   "lang": "fr",
-  "start_url": "./index.html",
+  "start_url": "./",
   "scope": "./",
-  "display": "fullscreen",
-  "orientation": "landscape",
-  "background_color": "#16130f",
-  "theme_color": "#16130f",
+  "display": "standalone",
+  "background_color": "#f5f4eb",
+  "theme_color": "#f5f4eb",
   "icons": [
-    { "src": "assets/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
-    { "src": "assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+    {"src": "assets/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
   ]
 }
