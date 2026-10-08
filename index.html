@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#f5f4eb">
-  <meta name="description" content="Un jardin de couleurs à faire fleurir. Empilez, fusionnez et déclenchez des cascades dans ce puzzle gratuit, sans publicité ni vies limitées.">
+  <meta name="theme-color" content="#101123">
+  <meta name="description" content="Créez de petites planètes et de grands combos. Un puzzle cosmique gratuit avec gravité, comètes et portails, à jouer sur téléphone, même hors ligne.">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <title>Hexa Bloom — faites fleurir les couleurs</title>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Orbitale — la fabrique des petits mondes</title>
   <link rel="icon" type="image/svg+xml" href="assets/icon.svg">
   <link rel="apple-touch-icon" href="assets/icon-192.png">
   <link rel="manifest" href="manifest.webmanifest">
@@ -16,38 +16,44 @@
 </head>
 <body>
   <header class="site-header">
-    <a class="brand" href="./" aria-label="Hexa Bloom, accueil"><img src="assets/icon.svg" width="43" height="43" alt=""><span>hexa<span class="brand-light">bloom</span><small>UNE PAUSE QUI PREND COULEUR</small></span></a>
-    <div class="header-right"><span class="free-label"><span></span>100 % jeu. 0 % pression.</span><button class="icon-button" id="sound-btn" aria-label="Activer le son" title="Son"><i data-icon="volume-x"></i></button><button class="icon-button" id="settings-btn" aria-label="Réglages" title="Réglages"><i data-icon="settings-2"></i></button></div>
+    <a class="brand" href="./" aria-label="Orbitale, accueil"><img src="assets/icon.svg" alt="" width="40" height="40"><span>orbitale<span class="brand-star">✦</span></span></a>
+    <div class="header-actions"><span class="free-label"><span></span> Un univers. Zéro pression.</span><button id="sound" class="icon-button" aria-label="Activer le son" title="Son"><i data-icon="volume-x"></i></button><button id="settings" class="icon-button" aria-label="Réglages" title="Réglages"><i data-icon="settings-2"></i></button></div>
   </header>
-  <main class="layout">
-    <aside class="sidebar">
-      <div class="eyebrow"><span class="tiny-flower">✳</span> LE BONHEUR, PAR PETITES PILES</div>
-      <h1>Un peu de calme.<br>Un joli <em>combo.</em></h1>
-      <p class="intro">Rapprochez les couleurs.<br>Et laissez la magie fleurir.</p>
-      <div class="garden-card">
-        <div class="garden-illustration" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><span class="float-star star-one">✧</span><span class="float-star star-two">✧</span><svg viewBox="0 0 280 170"><ellipse cx="141" cy="139" rx="102" ry="19" fill="#d9e2d0"/><path d="M43 116 138 64 237 114 237 130 140 164 43 132Z" fill="#8ab99a"/><path d="M43 116 138 67 237 114 141 149Z" fill="#c0dbab"/><path d="M97 114V68M164 119V51M204 113V89" stroke="#5d8e6e" stroke-width="4" stroke-linecap="round"/><path d="M97 99Q71 100 79 84Q98 81 97 99M164 90Q136 90 141 73Q163 73 164 90M164 104Q188 103 183 88Q163 88 164 104" fill="#6ba985"/><g fill="#f3a1b0"><circle cx="98" cy="54" r="14"/><circle cx="84" cy="64" r="14"/><circle cx="90" cy="80" r="14"/><circle cx="107" cy="79" r="14"/><circle cx="112" cy="62" r="14"/></g><circle cx="98" cy="68" r="10" fill="#ffe6a2"/><g fill="#ae9dda"><circle cx="164" cy="34" r="15"/><circle cx="148" cy="46" r="15"/><circle cx="154" cy="64" r="15"/><circle cx="176" cy="63" r="15"/><circle cx="180" cy="43" r="15"/></g><circle cx="164" cy="49" r="11" fill="#fff2c3"/><g fill="#edcb70"><circle cx="204" cy="80" r="9"/><circle cx="194" cy="88" r="9"/><circle cx="200" cy="99" r="9"/><circle cx="213" cy="97" r="9"/><circle cx="214" cy="85" r="9"/></g><circle cx="204" cy="89" r="6" fill="#fff5d9"/><path d="m65 127 12-6 12 6-12 6Z" fill="#e6d98e"/><path d="m120 135 12-6 12 6-12 6Z" fill="#8cb2a0"/></svg></div>
-        <div class="garden-card-bottom"><div><span class="small-label">VOTRE PETIT MONDE</span><strong id="world-name">Le jardin éveillé</strong></div><span class="world-number" id="world-number">01 / 05</span></div>
-        <button class="text-button" id="journey-btn">Explorer les 30 jardins <i data-icon="arrow-up-right"></i></button>
+  <main id="app" class="layout">
+    <aside class="universe-intro">
+      <p class="eyebrow"><span>✦</span> LA FABRIQUE DES PETITS MONDES</p>
+      <h1>De petits astres.<br>De <em>grands<br>combos.</em></h1>
+      <p class="intro-copy">Assemblez les couleurs.<br>Inventez votre univers.</p>
+      <div class="planet-art" aria-hidden="true">
+        <div class="art-orbit orbit-a"></div><div class="art-orbit orbit-b"></div>
+        <span class="art-spark spark-a">✦</span><span class="art-spark spark-b">✧</span><span class="art-spark spark-c">✦</span>
+        <div class="art-planet"><span class="planet-band band-a"></span><span class="planet-band band-b"></span><span class="planet-shine"></span></div>
+        <div class="art-ring"></div><div class="art-moon"><span></span></div><div class="art-dot"></div>
+        <span class="art-label">UN PEU DE GRAVITÉ, BEAUCOUP DE MAGIE.</span>
       </div>
-      <div class="daily-card"><span class="daily-icon"><i data-icon="sun"></i></span><div><strong>Une graine par jour</strong><p>Un défi identique pour tout le monde.</p></div><button class="icon-button" id="daily-btn" aria-label="Jouer au défi du jour"><i data-icon="arrow-right"></i></button></div>
-      <button id="zen-btn" class="zen-link"><i data-icon="infinity"></i> Une envie de jouer sans objectif ? <span>Mode zen</span></button>
-      <div class="sidebar-footer"><span><i data-icon="heart"></i> Sans vies limitées</span><span><i data-icon="wifi-off"></i> Aussi hors ligne</span></div>
+      <div class="discovery-card"><span class="discovery-icon">☄</span><div><strong id="world-name">Poussières d’étoiles</strong><p>30 escales. Des orbites, des portails<br>et une pluie de comètes à apprivoiser.</p></div></div>
+      <div class="intro-footer"><span><i data-icon="heart"></i> Aucune vie limitée</span><span><i data-icon="wifi-off"></i> Aussi hors ligne</span></div>
     </aside>
-    <section class="game-shell" aria-label="Jeu Hexa Bloom">
-      <div class="game-topline"><button id="level-btn" class="level-pill"><span class="level-dot"></span><span id="level-label">Jardin 01</span><i data-icon="chevron-down"></i></button><div class="best-label"><i data-icon="trophy"></i><span id="best-score">0</span><span class="best-word">record</span></div><button class="icon-button mobile-help" id="help-btn" aria-label="Comment jouer"><i data-icon="circle-help"></i></button></div>
-      <div class="objective-row"><div><span class="small-label" id="goal-caption">FAITES ÉCLORE LE SCORE</span><div class="score-line"><strong id="score">0</strong><span id="goal-value">/ 240</span></div></div><div class="combo-meter" id="combo-meter"><span id="combo-icon">✧</span><div><b id="combo-value">À vous de fleurir</b><small id="combo-sub">Une couleur après l’autre</small></div></div></div>
-      <div class="progress-track"><div id="progress-fill"></div><span class="progress-flower">✿</span></div>
-      <div id="extra-goals" class="extra-goals"></div>
-      <div class="board-wrap" id="board-wrap"><canvas id="board" aria-label="Plateau hexagonal : sélectionnez une pile, puis une case vide." role="img"></canvas><div id="board-accessible" class="sr-only" role="group" aria-label="Cases du plateau"></div><div id="floating-text" class="floating-text" aria-hidden="true"></div><div class="board-caption" id="board-caption"><span>✦</span> Les couleurs voisines s’attirent.</div></div>
-      <div class="hand-heading"><span id="hand-instruction">CHOISISSEZ UNE PILE</span><span class="hand-note">puis une case vide</span></div>
-      <div class="hand" id="hand" aria-label="Piles disponibles"></div>
-      <div class="tools"><button class="tool" id="undo-btn"><span class="tool-icon"><i data-icon="undo-2"></i></span><span>Annuler</span><small>gratuit</small></button><button class="tool" id="shuffle-btn"><span class="tool-icon"><i data-icon="shuffle"></i><b id="shuffle-count">3</b></span><span>Brasser</span><small>nouvelles piles</small></button><button class="tool" id="spade-btn"><span class="tool-icon"><i data-icon="wand-sparkles"></i><b id="spade-count">2</b></span><span>Éclaircir</span><small>libérer une case</small></button></div>
-      <div class="game-footer"><span id="move-label">0 coup joué</span><button id="hint-btn"><i data-icon="lightbulb"></i> Un petit indice</button></div>
+    <section class="game-shell" aria-label="Jeu Orbitale">
+      <div class="game-topline"><div class="level-group"><button id="levels" class="level-pill" aria-label="Choisir une escale"><span class="level-dot"></span><span id="level-number">Escale 01</span><i data-icon="chevron-down"></i></button><span id="level-name" class="world-name">Le premier souffle</span></div><button id="help" class="icon-button help-button" aria-label="Comment jouer"><i data-icon="circle-help"></i></button></div>
+      <div class="objective-row"><div class="score-block"><span class="small-label">POUSSIÈRE COSMIQUE</span><div class="score-line"><strong id="score">0</strong><span>/ <span id="target">360</span></span></div></div><div class="planet-objective"><span class="tiny-planet" aria-hidden="true"></span><div><span class="small-label">PLANÈTES</span><span class="planet-numbers"><b id="planet-count">0</b><span> / <span id="planet-goal">2</span></span></span></div></div></div>
+      <div class="goal-track" role="presentation"><div id="goal-fill"></div></div>
+      <div id="board-wrap" class="board-wrap"><canvas id="board" role="img" aria-label="Plateau de 5 colonnes sur 7 rangées. Choisissez un astre puis une case vide."></canvas><div id="board-accessible" class="sr-only" role="group" aria-label="Cases du plateau"></div><div id="combo" class="combo" aria-hidden="true"></div><div class="board-corner corner-tl"></div><div class="board-corner corner-br"></div></div>
+      <div class="energy-row"><span id="rule-line">3 astres identiques → 1 nouvel astre</span><button id="gravity" class="gravity-button" aria-label="Activer la gravité"><span class="gravity-symbol">✦</span><span class="gravity-track"><span id="energy-fill"></span></span><span id="energy-count">0</span><span class="gravity-name">Attraction</span></button></div>
+      <div id="hand" class="hand" role="group" aria-label="Astres disponibles. Choisissez un astre puis une case vide.">
+        <button class="offer" data-slot="0" aria-label="Choisir le premier astre"><canvas width="92" height="76" aria-hidden="true"></canvas><span class="offer-label">Astéroïde</span><span class="offer-key">1</span></button>
+        <button class="offer" data-slot="1" aria-label="Choisir le deuxième astre"><canvas width="92" height="76" aria-hidden="true"></canvas><span class="offer-label">Astéroïde</span><span class="offer-key">2</span></button>
+        <button class="offer" data-slot="2" aria-label="Choisir le troisième astre"><canvas width="92" height="76" aria-hidden="true"></canvas><span class="offer-label">Astéroïde</span><span class="offer-key">3</span></button>
+      </div>
+      <div class="tools" aria-label="Outils gratuits"><button id="undo" class="tool" aria-label="Annuler le dernier coup"><i data-icon="undo-2"></i><span>Annuler</span></button><button id="shuffle" class="tool" aria-label="Changer les astres disponibles"><i data-icon="shuffle"></i><span>Changer</span><b id="shuffle-count">3</b></button><button id="clear" class="tool" aria-label="Libérer une case"><i data-icon="wand-sparkles"></i><span>Libérer</span><b id="clear-count">2</b></button><button id="hint" class="tool" aria-label="Montrer un indice"><i data-icon="lightbulb"></i><span>Indice</span></button></div>
+      <nav class="mode-switch" aria-label="Modes de jeu"><button id="journey" class="active" aria-pressed="true"><span>✦</span> Voyage</button><button id="daily" aria-pressed="false"><i data-icon="sun"></i> Défi du jour</button><button id="zen" aria-pressed="false"><i data-icon="infinity"></i> Libre</button></nav>
     </section>
   </main>
-  <footer class="page-footer"><span>Fait pour le plaisir de jouer.</span><button id="rules-link">Comment jouer</button><span class="footer-dot">·</span><button id="credits-btn">Crédits & assets libres</button></footer>
+  <footer class="page-footer"><span>Un petit voyage, juste pour le plaisir.</span><button id="credits">Crédits & assets libres</button></footer>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
-  <dialog id="modal"><button class="modal-close icon-button" id="modal-close" aria-label="Fermer"><i data-icon="x"></i></button><div id="modal-content"></div></dialog>
+  <div id="live" class="sr-only" role="status" aria-live="polite"></div>
+  <canvas id="drag-ghost" width="140" height="140" aria-hidden="true" hidden></canvas>
+  <dialog id="dialog"><button id="close-dialog" class="icon-button dialog-close" aria-label="Fermer"><i data-icon="x"></i></button><div id="dialog-body"></div></dialog>
   <script type="module" src="src/main.js"></script>
 </body>
 </html>

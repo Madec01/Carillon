@@ -1,20 +1,32 @@
-# Validation de livraison
+# Validation d’Orbitale
 
-Effectuée dans l’environnement cloud le 7 octobre 2026, avec Node 24.19 et Chromium 151 via Playwright 1.58.2.
+Vérifications effectuées le 8 octobre 2026 avec Node.js 24 et Chromium 151, piloté par Playwright 1.58.2.
 
-- **15 tests moteur et animation réussis** : géométrie, placements interdits, conservation des pièces, cascade ×2, fleurs, soleil, rochers, jokers, objectifs combinés, déterminisme, aides gratuites et détection du plateau plein. Les tests d’animation vérifient aussi la conservation des pièces en vol, l’arrivée différée, les fréquences 30/60/120 Hz et la hauteur maximale des piles.
-- **30 jardins sur 30 terminés** avec des actions légales par un joueur de référence qui évalue les coups. Cela vérifie que les objectifs sont réalisables, sans remplacer un playtest humain d’équilibrage. Reproduction : `node tests/progression.mjs`.
-- **42 assertions navigateur réussies** : ordinateur 1440 × 1024, téléphone 390 × 844 et petit téléphone 360 × 640. Contrôles du toucher, glisser-déposer, annulation, fusion, victoire et déblocage, cascade, audio, options d’accessibilité, sauvegarde après rechargement, modes, récupération d’un plateau plein et jeu hors ligne. Aucun débordement horizontal, erreur JavaScript ou réponse HTTP en échec pendant cette suite.
-- Les cinq fichiers audio MP3 ont été décodés avec succès par Web Audio.
-- L’édition autonome a été exécutée comme document HTML avec le réseau coupé : fusion réelle, contrôle audio et aucune requête externe. L’accès direct `file://` est désactivé par la politique du navigateur cloud ; ce test ne prétend pas valider le lecteur de fichiers d’un téléphone.
-- Le serveur a été arrêté puis redémarré avec le nouveau `serve.sh`, avant une nouvelle validation fonctionnelle.
+- **21 tests de règles réussis** (`npm test`) : couleur et taille des fusions, conservation de matière, attraction, supernovas, comètes, portails, météorites, orbites, gravité, pouvoirs, sauvegardes et progression. Le bot termine les **30 missions** en utilisant des coups légaux.
+- **45 assertions navigateur réussies** (`tests/browser.mjs`) : écran 1440 × 1024, téléphone 390 × 844 et petit téléphone 360 × 640. Placement tactile, véritable glisser-déposer, cascade à deux fusions, score synchronisé, annulation, victoire et déblocage, comète, attraction chargée, audio, accessibilité, reprise des sauvegardes, modes, récupération gratuite d’un plateau plein et jeu hors ligne. Une annulation pendant le délai de victoire empêche un déblocage incorrect. Aucun débordement horizontal, erreur JavaScript ou réponse HTTP en échec.
+- **47 assertions de rendu réussies** (`tests/renderer-browser.mjs`) : instantanés après chaque événement, conservation de l’objet événement, callback d’impact unique, mouvements réduits, interruption d’une animation et arrêt des rafraîchissements une fois les effets terminés.
+- **HTML autonome testé sans réseau** (`tests/portable.mjs`) : cascade réelle étoile → lune → planète, contrôle sonore, cinq fichiers audio décodés par Web Audio, aucune requête HTTP externe ni erreur JavaScript.
+- Le serveur a été redémarré avec `serve.sh` et le service worker a été régénéré après les changements des fichiers livrés. Le cache retire uniquement les anciennes versions Orbitale et Hexa Bloom.
 
-Les tailles téléphone ont été émulées dans Chromium. Safari iOS et les appareils physiques n’ont pas été testés dans cet environnement. Le jeu utilise des API web standard et des fichiers MP3 pour faciliter cette compatibilité.
+Le plateau possède 5 colonnes et 7 rangées. Sur les deux formats téléphone testés, son canvas mesure environ 364 × 478 et 336 × 348 pixels CSS ; la réserve, les outils et les modes restent visibles. Les formes, cases de portail, orbites et météorites varient avec les missions.
 
-Les captures des tests sont produites hors dépôt dans `/tmp/hexa-bloom-tests`. Les résultats ne dépendent pas des anciennes suites de Carillon, supprimées lors de la refonte.
+Les astres utilisent des sprites Canvas mis en cache et une résolution plafonnée à deux fois la taille CSS. Les animations terminent proprement quand la page devient invisible. Elles respectent l’option de réduction des mouvements. Les captures sont produites hors dépôt dans `/tmp/orbitale-tests`.
 
-## Refonte des effets
+L’aperçu vidéo montre une véritable cascade de la première mission puis une supernova issue de quatre coups légaux en mode libre.
 
-Les piles utilisent des sprites de pièces aux bords arrondis, avec des faces ombrées et un reflet. Les déplacements sont calculés pièce par pièce en fonction du temps écoulé : retrait de la source au décollage, ajout à la destination à l’atterrissage, rebond et son au même instant. Le score attend l’éclosion. Les animations réduites restent disponibles.
+## Reproduire
 
-Une cascade réelle a été capturée au format téléphone : placement → transfert → éclosion → second transfert → seconde éclosion. Les lectures de score ont été vérifiées pendant ces phases. Le coût JavaScript du dessin du plateau mesuré au 95e percentile était d’environ 3,3 ms dans Chromium cloud (221 images échantillonnées, capture vidéo active). Ce chiffre n’est pas une mesure de performance sur appareil physique.
+Démarrer `./serve.sh`, puis exécuter :
+
+```sh
+npm test
+node tests/progression.mjs
+PLAYWRIGHT_MODULE=/chemin/vers/playwright-system.mjs node tests/browser.mjs
+PLAYWRIGHT_MODULE=/chemin/vers/playwright-system.mjs node tests/renderer-browser.mjs
+node tools/standalone.mjs /tmp/Orbitale.html
+PLAYWRIGHT_MODULE=/chemin/vers/playwright-system.mjs node tests/portable.mjs
+```
+
+`PLAYWRIGHT_MODULE` peut être omis si le paquet `playwright` et son navigateur sont installés normalement. `TEST_URL` permet de changer l’adresse de test ; `PORTABLE_FILE` celle du HTML autonome.
+
+Les formats téléphone sont émulés dans Chromium. Safari iOS et des appareils physiques n’ont pas été testés ici. L’accès direct `file://` est désactivé par la politique du navigateur cloud : l’édition autonome a été exécutée comme document HTML, réseau coupé. Cela ne valide pas les lecteurs de fichiers intégrés des téléphones ; l’hébergement HTTPS permet de jouer et d’installer le jeu sans dépendre de ces lecteurs.

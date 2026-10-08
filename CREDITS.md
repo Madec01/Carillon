@@ -1,6 +1,6 @@
-# Crédits — Hexa Bloom
+# Crédits — Orbitale
 
-Hexa Bloom possède son propre nom, son interface, ses illustrations, ses règles de progression et ses niveaux. Il s’inspire du genre des puzzles de tri et de piles hexagonales ; aucun graphisme, marque ou code d’un autre jeu commercial n’est repris.
+Orbitale possède son propre nom, son interface, ses illustrations, ses règles de progression et ses niveaux. Ce puzzle de fusions met en scène une fabrique de petites planètes, des portails, des orbites et des marées gravitationnelles. Aucun graphisme, marque ou code d’un autre jeu commercial n’est repris.
 
 ## Sons
 
@@ -18,7 +18,7 @@ Hexa Bloom possède son propre nom, son interface, ses illustrations, ses règle
 - Source : https://github.com/Tonejs/audio/tree/master/salamander
 - Fichier téléchargé : https://raw.githubusercontent.com/Tonejs/audio/master/salamander/C4.mp3
 - Copie : `assets/audio/piano-c4.mp3`. Licence et attributions d’origine : `assets/licenses/Salamander.txt`.
-- Arrangement original génératif de quatre accords, transposition et enveloppes réalisés par Hexa Bloom. Ce n’est pas une piste commerciale préexistante.
+- Arrangement original génératif de quatre accords, transposition et enveloppes réalisés par Orbitale. Ce n’est pas une piste commerciale préexistante.
 
 ## Police
 
@@ -36,6 +36,6 @@ Hexa Bloom possède son propre nom, son interface, ses illustrations, ses règle
 
 ## Création originale
 
-Illustration du jardin, logo, graphismes Canvas des hexagones, effets de particules, design sonore interactif et code créés pour ce projet. Code sous licence MIT, voir `LICENSE`.
+Illustrations cosmiques, logo, graphismes Canvas des étoiles, lunes et planètes, effets de fusion, comètes, particules, design sonore interactif et code créés pour ce projet. Code sous licence MIT, voir `LICENSE`.
 
 Tous les assets nécessaires sont locaux. Aucun CDN, publicité ou suivi n’est chargé pendant une partie.

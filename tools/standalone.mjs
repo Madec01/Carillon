@@ -1,13 +1,20 @@
 // Make a portable HTML edition with the same game and all assets embedded.
 // No bundler, dependency, server or network request is needed to play this edition.
 import {readFileSync,writeFileSync,readdirSync} from 'node:fs';
-const output=process.argv[2]||'/tmp/Hexa-Bloom.html';
+const output=process.argv[2]||'/tmp/Orbitale.html';
 const data=(path,type)=>`data:${type};base64,${readFileSync(path).toString('base64')}`;
 const assets={};
 for(const file of readdirSync('assets/icons'))assets[`assets/icons/${file}`]=data(`assets/icons/${file}`,'image/svg+xml');
 for(const file of readdirSync('assets/audio'))assets[`assets/audio/${file}`]=data(`assets/audio/${file}`,file.endsWith('.mp3')?'audio/mpeg':'audio/ogg');
 let css=readFileSync('src/style.css','utf8').replace("url('../assets/fonts/Nunito.ttf')",`url('${data('assets/fonts/Nunito.ttf','font/ttf')}')`);
-let script=['engine','renderer','audio','main'].map(name=>readFileSync(`src/${name}.js`,'utf8').replace(/^import .*;\n/gm,'').replace(/^export /gm,'')).join('\n');
+let script='';
+for(const name of ['engine','renderer','audio','main']){
+  let source=readFileSync(`src/${name}.js`,'utf8');
+  const exports=[...source.matchAll(/^export (?:const|class|function) (\w+)/gm)].map(m=>m[1]);
+  source=source.replace(/^import \{([^}]+)\} from ['"]\.\/(\w+)\.js['"];?\n/gm,(_,names,module)=>`const {${names}}=ORBIT_MODULES.${module};\n`).replace(/^export /gm,'');
+  script+=`ORBIT_MODULES.${name}=(()=>{\n${source}\nreturn {${exports.join(',')}};\n})();\n`;
+}
+script='const ORBIT_MODULES={};\n'+script;
 script=script.replace('fetch(`assets/icons/${name}.svg`)','fetch(BUNDLED_ASSETS[`assets/icons/${name}.svg`])').replace('fetch(`assets/audio/${file}`)','fetch(BUNDLED_ASSETS[`assets/audio/${file}`])');
 script=script.replace(/^if\('serviceWorker' in navigator\).*$/m,'');
 script=script.replace('<a class="credit-link" href="CREDITS.md" target="_blank" rel="noopener">Tous les crédits</a>','<span>Les licences complètes sont intégrées à ce fichier HTML.</span>');
